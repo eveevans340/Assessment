@@ -19,7 +19,7 @@ def print_parameter_query(fields:str, where:str, parameter):
     results = cursor.fetchall()
     print(tabulate(results,fields.split(",")))
     db.close()  
-    
+
 def print_query(view_name:str):
     ''' Prints the specified view from the database in a table '''
     # Set up the connection to the database
@@ -36,3 +36,15 @@ def print_query(view_name:str):
     # Print the results in a table with the headings
     print(tabulate(results,headings))
     db.close()
+
+msg ="What information do you want?"
+title = "Dog Shelter"
+choices = ['All data',
+            'Dogs who are fully vaccinated',
+            'Dogs of a specific breed',
+            'The health of all dogs',
+            'Dogs of a certain gender',
+            'Unadopted dogs who recently came to the shelter',
+            'All unadopted dogs',
+            'Fully vaccinated and unadopted dogs']
+choice = choicebox(msg, title, choices)
