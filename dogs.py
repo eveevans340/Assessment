@@ -4,7 +4,7 @@ from tabulate import tabulate
 
 # This is the filename of the database to be used
 DB_NAME = 'dog_shelter.db'
-TABLES = (" dog_shelter "
+TABLES = (" dogs_data "
            "LEFT JOIN genders ON dogs_data.gender_id = genders.gender_id "
            "LEFT JOIN breeds ON dogs_data.breed_id = breeds.breed_id "
            "LEFT JOIN adopters ON dogs_data.adopter_id = adopters.adopter_id " )
@@ -39,7 +39,7 @@ def print_query(view_name:str):
 
 msg ="What information do you want?"
 title = "Dog Shelter"
-choices = ['All data',
+choices = ['All information',
             'Dogs who are fully vaccinated',
             'Dogs of a specific breed',
             'The health of all dogs',
@@ -48,3 +48,39 @@ choices = ['All data',
             'All unadopted dogs',
             'Fully vaccinated and unadopted dogs']
 choice = choicebox(msg, title, choices)
+if choice == 'All information':
+    print_query('all_data')
+elif choice == 'Dogs who are fully vaccinated':
+    print_query('all_vaccinated')
+elif choice == 'Dogs of a specific breed':
+    msg ="What dog breed?"
+    title = "Dog Breeds"
+    choices = ['Golden Retriever',
+            'Bulldog',
+            'Great Dane',
+            'Labrador',
+            'Rottweiler',
+            'Border Collie',
+            'German Shepard',
+            'Boxer',
+            'Dachshund',
+            'Chihuahua',
+            'Pitbull']
+    choice = choicebox(msg, title, choices)
+    print_parameter_query('dog_name, age, gender, arrival_date, date_adopted', 'breed = ? ORDER BY date_adopted', choice )
+
+elif choice == "The health of all dogs":
+    print_query('dog_health')
+elif choice == 'Dogs of a certain gender':
+     msg ="What dog breed?"
+     title = "Dog Breeds"
+     choices = ['Male',
+            'Female']
+     choice = choicebox(msg, title, choices)
+     print_parameter_query('dog_name, age, breed, arrival_date, date_adopted', 'gender = ? ORDER BY date_adopted', choice )
+elif choice == 'Unadopted dogs who recently came to the shelter':
+    print_query('recent_dogs')
+elif choice == 'All unadopted dogs':
+    print_query('unadopted_dogs')
+elif choice == 'Fully vaccinated and unadopted dogs':
+    print_query('vaccinated_unadopted_dogs')
