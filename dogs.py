@@ -4,6 +4,10 @@ from tabulate import tabulate
 
 # This is the filename of the database to be used
 DB_NAME = 'dog_shelter.db'
+TABLES = (" dog_shelter "
+           "LEFT JOIN genders ON dogs_data.gender_id = genders.gender_id "
+           "LEFT JOIN breeds ON dogs_data.breed_id = breeds.breed_id "
+           "LEFT JOIN adopters ON dogs_data.adopter_id = adopters.adopter_id " )
 
 def print_query(view_name:str):
     ''' Prints the specified view from the database in a table '''
