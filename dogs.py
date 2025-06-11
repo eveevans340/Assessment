@@ -55,16 +55,16 @@ elif choice == 'Dogs who are fully vaccinated':
 elif choice == 'Dogs of a specific breed':
     msg ="What dog breed?"
     title = "Dog Breeds"
-    choices = ['Golden Retriever',
+    choices = ['Border Collie',
+            'Boxer',
             'Bulldog',
+            'Chihuahua',
+            'Dachshund',
+            'German Shepard',
+            'Golden Retriever',
             'Great Dane',
             'Labrador',
             'Rottweiler',
-            'Border Collie',
-            'German Shepard',
-            'Boxer',
-            'Dachshund',
-            'Chihuahua',
             'Pitbull']
     choice = choicebox(msg, title, choices)
     print_parameter_query('dog_name, age, gender, arrival_date, date_adopted', 'breed = ? ORDER BY date_adopted', choice )
