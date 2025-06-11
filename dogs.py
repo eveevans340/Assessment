@@ -18,6 +18,7 @@ def print_parameter_query(fields:str, where:str, parameter):
     cursor.execute(sql,(parameter,))
     results = cursor.fetchall()
     print(tabulate(results,fields.split(",")))
+    codebox('Here are the results:', "Results", tabulate(results, headings))
     db.close()  
 
 def print_query(view_name:str):
@@ -35,6 +36,7 @@ def print_query(view_name:str):
     headings = list(sum(cursor.fetchall(),()))
     # Print the results in a table with the headings
     print(tabulate(results,headings))
+    codebox('Here are the results:', "Results", tabulate(results, headings))
     db.close()
 
 msg ="What information do you want?"
@@ -50,6 +52,7 @@ choices = ['All information',
 choice = choicebox(msg, title, choices)
 if choice == 'All information':
     print_query('all_data')
+    codebox(print_query('all_data'))
 elif choice == 'Dogs who are fully vaccinated':
     print_query('all_vaccinated')
 elif choice == 'Dogs of a specific breed':
@@ -72,8 +75,8 @@ elif choice == 'Dogs of a specific breed':
 elif choice == "The health of all dogs":
     print_query('dog_health')
 elif choice == 'Dogs of a certain gender':
-     msg ="What dog breed?"
-     title = "Dog Breeds"
+     msg ="What gender?"
+     title = "Genders"
      choices = ['Male',
             'Female']
      choice = choicebox(msg, title, choices)
