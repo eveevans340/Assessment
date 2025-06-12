@@ -19,6 +19,16 @@ def print_parameter_query(fields:str, where:str, parameter):
     results = cursor.fetchall()
     print(tabulate(results,fields.split(",")))
     codebox('Here are the results:', "Results", tabulate(results, fields.split(",")))
+    title = "Dog Shelter"
+    choices = ['All information',
+            'Dogs who are fully vaccinated',
+            'Dogs of a specific breed',
+            'The health of all dogs',
+            'Dogs of a certain gender',
+            'Unadopted dogs who recently came to the shelter',
+            'All unadopted dogs',
+            'Fully vaccinated and unadopted dogs']
+    choice = choicebox(msg, title, choices)
     db.close()  
 
 def print_query(view_name:str):
@@ -37,6 +47,16 @@ def print_query(view_name:str):
     # Print the results in a table with the headings
     print(tabulate(results,headings))
     codebox('Here are the results:', "Results", tabulate(results, headings))
+    title = "Dog Shelter"
+    choices = ['All information',
+            'Dogs who are fully vaccinated',
+            'Dogs of a specific breed',
+            'The health of all dogs',
+            'Dogs of a certain gender',
+            'Unadopted dogs who recently came to the shelter',
+            'All unadopted dogs',
+            'Fully vaccinated and unadopted dogs']
+    choice = choicebox(msg, title, choices)
     db.close()
 
 msg ="What information do you want?"
