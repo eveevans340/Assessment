@@ -18,7 +18,7 @@ def print_parameter_query(fields:str, where:str, parameter):
     cursor.execute(sql,(parameter,))
     results = cursor.fetchall()
     print(tabulate(results,fields.split(",")))
-    codebox('Here are the results:', "Results", tabulate(results, headings))
+    codebox('Here are the results:', "Results", tabulate(results, fields.split(",")))
     db.close()  
 
 def print_query(view_name:str):
@@ -52,7 +52,6 @@ choices = ['All information',
 choice = choicebox(msg, title, choices)
 if choice == 'All information':
     print_query('all_data')
-    codebox(print_query('all_data'))
 elif choice == 'Dogs who are fully vaccinated':
     print_query('all_vaccinated')
 elif choice == 'Dogs of a specific breed':
@@ -75,11 +74,9 @@ elif choice == 'Dogs of a specific breed':
 elif choice == "The health of all dogs":
     print_query('dog_health')
 elif choice == 'Dogs of a certain gender':
-     msg ="What gender?"
-     title = "Genders"
      choices = ['Male',
             'Female']
-     choice = choicebox(msg, title, choices)
+     choice = choicebox('What gender?', 'Genders', choices)
      print_parameter_query('dog_name, age, breed, arrival_date, date_adopted', 'gender = ? ORDER BY date_adopted', choice )
 elif choice == 'Unadopted dogs who recently came to the shelter':
     print_query('recent_dogs')
