@@ -17,18 +17,7 @@ def print_parameter_query(fields:str, where:str, parameter):
     sql = ("SELECT " + fields + " FROM " + TABLES + " WHERE " + where)
     cursor.execute(sql,(parameter,))
     results = cursor.fetchall()
-    print(tabulate(results,fields.split(",")))
     codebox('Here are the results:', "Results", tabulate(results, fields.split(",")))
-    title = "Dog Shelter"
-    choices = ['All information',
-            'Dogs who are fully vaccinated',
-            'Dogs of a specific breed',
-            'The health of all dogs',
-            'Dogs of a certain gender',
-            'Unadopted dogs who recently came to the shelter',
-            'All unadopted dogs',
-            'Fully vaccinated and unadopted dogs']
-    choice = choicebox(msg, title, choices)
     db.close()  
 
 def print_query(view_name:str):
@@ -45,8 +34,10 @@ def print_query(view_name:str):
     cursor.execute(field_names)
     headings = list(sum(cursor.fetchall(),()))
     # Print the results in a table with the headings
-    print(tabulate(results,headings))
     codebox('Here are the results:', "Results", tabulate(results, headings))
+    db.close()
+while True:
+    msg ="What information do you want?"
     title = "Dog Shelter"
     choices = ['All information',
             'Dogs who are fully vaccinated',
@@ -57,27 +48,12 @@ def print_query(view_name:str):
             'All unadopted dogs',
             'Fully vaccinated and unadopted dogs']
     choice = choicebox(msg, title, choices)
-    db.close()
-
-msg ="What information do you want?"
-title = "Dog Shelter"
-choices = ['All information',
-            'Dogs who are fully vaccinated',
-            'Dogs of a specific breed',
-            'The health of all dogs',
-            'Dogs of a certain gender',
-            'Unadopted dogs who recently came to the shelter',
-            'All unadopted dogs',
-            'Fully vaccinated and unadopted dogs']
-choice = choicebox(msg, title, choices)
-if choice == 'All information':
-    print_query('all_data')
-elif choice == 'Dogs who are fully vaccinated':
-    print_query('all_vaccinated')
-elif choice == 'Dogs of a specific breed':
-    msg ="What dog breed?"
-    title = "Dog Breeds"
-    choices = ['Border Collie',
+    if choice == 'All information':
+        print_query('all_data')
+    elif choice == 'Dogs who are fully vaccinated':
+        print_query('all_vaccinated')
+    elif choice == 'Dogs of a specific breed':
+        choices = ['Border Collie',
             'Boxer',
             'Bulldog',
             'Chihuahua',
@@ -88,19 +64,20 @@ elif choice == 'Dogs of a specific breed':
             'Labrador',
             'Rottweiler',
             'Pitbull']
-    choice = choicebox(msg, title, choices)
-    print_parameter_query('dog_name, age, gender, arrival_date, date_adopted', 'breed = ? ORDER BY date_adopted', choice )
-
-elif choice == "The health of all dogs":
-    print_query('dog_health')
-elif choice == 'Dogs of a certain gender':
-     choices = ['Male',
-            'Female']
-     choice = choicebox('What gender?', 'Genders', choices)
-     print_parameter_query('dog_name, age, breed, arrival_date, date_adopted', 'gender = ? ORDER BY date_adopted', choice )
-elif choice == 'Unadopted dogs who recently came to the shelter':
-    print_query('recent_dogs')
-elif choice == 'All unadopted dogs':
-    print_query('unadopted_dogs')
-elif choice == 'Fully vaccinated and unadopted dogs':
-    print_query('vaccinated_unadopted_dogs')
+        choice = choicebox('What dog breed?', 'Dog Breeds', choices)
+        print_parameter_query('dog_name, age, gender, arrival_date, date_adopted', 'breed = ? ORDER BY date_adopted', choice )
+    elif choice == "The health of all dogs":
+        print_query('dog_health')
+    elif choice == 'Dogs of a certain gender':
+        choices = ['Male',
+        'Female']
+        choice = choicebox('What gender?', 'Genders', choices)
+        print_parameter_query('dog_name, age, breed, arrival_date, date_adopted', 'gender = ? ORDER BY date_adopted', choice )
+    elif choice == 'Unadopted dogs who recently came to the shelter':
+        print_query('recent_dogs')
+    elif choice == 'All unadopted dogs':
+        print_query('unadopted_dogs')
+    elif choice == 'Fully vaccinated and unadopted dogs':
+        print_query('vaccinated_unadopted_dogs')
+    else:
+        break
