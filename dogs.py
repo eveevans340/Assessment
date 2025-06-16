@@ -71,7 +71,7 @@ while True:
     elif choice == 'Dogs of a certain gender':
         choices = ['Male',
         'Female']
-        choice = choicebox('What gender?', 'Genders', choices)
+        choice = buttonbox('What gender?', 'Genders', choices)
         print_parameter_query('dog_name, age, breed, arrival_date, date_adopted', 'gender = ? ORDER BY date_adopted', choice )
     elif choice == 'Unadopted dogs who recently came to the shelter':
         print_query('recent_dogs')
