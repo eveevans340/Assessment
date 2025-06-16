@@ -17,6 +17,7 @@ def print_parameter_query(fields:str, where:str, parameter):
     sql = ("SELECT " + fields + " FROM " + TABLES + " WHERE " + where)
     cursor.execute(sql,(parameter,))
     results = cursor.fetchall()
+    # Prints the results in an easygui table with the headings
     codebox('Here are the results:', "Results", tabulate(results, fields.split(",")))
     db.close()  
 
@@ -33,12 +34,12 @@ def print_query(view_name:str):
     field_names = "SELECT name from pragma_table_info('" + view_name + "') AS tblInfo"
     cursor.execute(field_names)
     headings = list(sum(cursor.fetchall(),()))
-    # Print the results in a table with the headings
+    # Print the results in an easy gui table with the headings
     codebox('Here are the results:', "Results", tabulate(results, headings))
     db.close()
+
+# Creates a loop for all of the queries
 while True:
-    msg ="What information do you want?"
-    title = "Dog Shelter"
     choices = ['All information',
             'Dogs who are fully vaccinated',
             'Dogs of a specific breed',
@@ -47,7 +48,7 @@ while True:
             'Unadopted dogs who recently came to the shelter',
             'All unadopted dogs',
             'Fully vaccinated and unadopted dogs']
-    choice = choicebox(msg, title, choices)
+    choice = choicebox('What information do you want?', 'Dog Shelter', choices)
     if choice == 'All information':
         print_query('all_data')
     elif choice == 'Dogs who are fully vaccinated':
